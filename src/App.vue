@@ -1,16 +1,19 @@
 <template>
+  <n-switch v-model:value="active">
+    <template #checked> 关闭热力图 </template>
+    <template #unchecked> 开启热力图 </template>
+  </n-switch>
   <div>
-    <a target="_blank">
-      <img src="./assets/vue.svg" class="logo" alt="Vue logo" />
-    </a>
+    <img src="./assets/vue.svg" class="logo" alt="Vue logo" />
+    <TestFunction msg="Test Function" />
   </div>
-  <HelloWorld msg="Test Function" />
 </template>
 
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import TestFunction from "./components/TestFunction.vue"
+import { ref } from "vue"
+
+const active = ref(false)
 </script>
 
 <style scoped>
