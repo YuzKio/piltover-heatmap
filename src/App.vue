@@ -1,17 +1,30 @@
 <template>
-  <n-switch v-model:value="active">
-    <template #checked> 关闭热力图 </template>
+  <n-switch
+    v-model:value="active"
+    style="z-index: 100"
+    id="switch"
+    @click="($event: any) => handleDataReport($event, 'switch')"
+  >
     <template #unchecked> 开启热力图 </template>
   </n-switch>
-  <div>
-    <img src="./assets/vue.svg" class="logo" alt="Vue logo" />
+  <HeatMap v-if="active" @close="active = false" />
+  <section>
+    <img
+      src="./assets/vue.svg"
+      class="logo"
+      alt="Vue logo"
+      id="logo"
+      @click="($event: any) => handleDataReport($event, 'logo')"
+    />
     <TestFunction msg="Test Function" />
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
 import TestFunction from "./components/TestFunction.vue"
+import HeatMap from "./components/HeatMap.vue"
 import { ref } from "vue"
+import { handleDataReport } from "./components/utils/tracking"
 
 const active = ref(false)
 </script>

@@ -1,22 +1,30 @@
 <template>
-  <h1>{{ msg }}</h1>
+  <h1
+    id="message"
+    @click="($event: any) => handleDataReport($event, 'message')"
+  >
+    {{ msg }}
+  </h1>
 
   <div class="card">
     <n-space>
       <n-button
+        id="counter"
         @click="($event: any) => {
           count ++
-          clickX = $event.clientX
-          clickY = $event.clientY
-          handlePointerInfo('counter')
+          handleDataReport($event, 'counter')
         }"
-        id="counter"
       >
         count is {{ count }}
       </n-button>
       <n-tooltip placement="bottom" trigger="click">
         <template #trigger>
-          <n-button> 点击 </n-button>
+          <n-button
+            id="tooltip"
+            @click="($event: any) => handleDataReport($event, 'tooltip')"
+          >
+            点击
+          </n-button>
         </template>
         <span> I wish they all could be California girls </span>
       </n-tooltip>
@@ -26,8 +34,11 @@
         size="medium"
         scrollable
       >
-        <n-button style="margin-right: 8px">
-          {{ value || 'Popselect' }}
+        <n-button
+          id="popselect"
+          @click="($event: any) => handleDataReport($event, 'popselect')"
+        >
+          {{ value || "Popselect" }}
         </n-button>
       </n-popselect>
     </n-space>
@@ -35,79 +46,65 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue"
+import { handleDataReport } from "./utils/tracking"
 
 defineProps<{ msg: string }>()
 
 const count = ref(0)
-const value = ref('Drive My Car')
+const value = ref("Drive My Car")
 const options = [
   {
-    label: 'Drive My Car',
-    value: 'Drive My Car'
+    label: "Drive My Car",
+    value: "Drive My Car",
   },
   {
-    label: 'Norwegian Wood',
-    value: 'Norwegian Wood'
+    label: "Norwegian Wood",
+    value: "Norwegian Wood",
   },
   {
     label: "You Won't See",
     value: "You Won't See",
-    disabled: true
+    disabled: true,
   },
   {
-    label: 'Nowhere Man',
-    value: 'Nowhere Man'
+    label: "Nowhere Man",
+    value: "Nowhere Man",
   },
   {
-    label: 'Think For Yourself',
-    value: 'Think For Yourself'
+    label: "Think For Yourself",
+    value: "Think For Yourself",
   },
   {
-    label: 'The Word',
-    value: 'The Word'
+    label: "The Word",
+    value: "The Word",
   },
   {
-    label: 'Michelle',
-    value: 'Michelle',
-    disabled: true
+    label: "Michelle",
+    value: "Michelle",
+    disabled: true,
   },
   {
-    label: 'What goes on',
-    value: 'What goes on'
+    label: "What goes on",
+    value: "What goes on",
   },
   {
-    label: 'Girl',
-    value: 'Girl'
+    label: "Girl",
+    value: "Girl",
   },
   {
     label: "I'm looking through you",
-    value: "I'm looking through you"
+    value: "I'm looking through you",
   },
   {
-    label: 'In My Life',
-    value: 'In My Life'
+    label: "In My Life",
+    value: "In My Life",
   },
   {
-    label: 'Wait',
-    value: 'Wait'
-  }
+    label: "Wait",
+    value: "Wait",
+  },
 ]
-
-const clickX = ref(0)
-const clickY = ref(0)
-
-const handlePointerInfo = (id: string) => {
-  const clickDom = document.getElementById(id)
-  const x = clickDom?.getBoundingClientRect().left
-  const y = clickDom?.getBoundingClientRect().top
-  const data = {
-    dom: id,
-    clickx: clickX.value - x!,
-    clicky: clickY.value - y!,
-  }
-  webfunnyEvent(5).trackEvent(data)
-}
 </script>
 
 <style scoped>
