@@ -30,22 +30,14 @@ const getPointers = async () => {
 // 数据处理
 export const getPointerData = async () => {
   const pointers = await getPointers()
-  const domMap = new Map()
-  return pointers.reduce((prev: Array<any>, pointer: any) => {
-    const { dom, clickx, clicky } = pointer
-    let domInfo
-    if (domMap.has(dom)) {
-      domInfo = domMap.get(dom)
-    } else {
-      domInfo = document.getElementById(dom)
-      domMap.set(dom, domInfo)
-    }
-    const domX = domInfo?.getBoundingClientRect().left
-    const domY = domInfo?.getBoundingClientRect().top
-    prev.push({
-      x: clickx + domX!,
-      y: clicky + domY!,
-    })
-    return prev
+  return Object.keys(pointers).reduce((prev: Array<any>, cur) => {
+    const temp = pointers[cur].reduce((prevArr: Array<any>, curPoint: any) => {
+      const { clickx, clicky } = curPoint
+      const domRect = document.getElementById(cur)?.getBoundingClientRect()
+      const x = domRect?.left! + clickx
+      const y = domRect?.top! + clicky
+      return [...prevArr, { x, y }]
+    }, [])
+    return prev.concat(temp)
   }, [])
 }
