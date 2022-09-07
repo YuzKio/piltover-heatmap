@@ -6,6 +6,16 @@
     {{ msg }}
   </h1>
 
+  <div>
+    <n-data-table
+      :columns="columns"
+      :data="[]"
+      style="width: 1000px; height: 800px"
+      id="table"
+      @click="($event: any) => handleDataReport($event, 'table')"
+    />
+  </div>
+
   <div class="card">
     <n-space>
       <n-button
@@ -105,10 +115,19 @@ const options = [
     value: "Wait",
   },
 ]
-</script>
 
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
-</style>
+const columns = [
+  {
+    title: "Name",
+    key: "name",
+  },
+  {
+    title: "Age",
+    key: "age",
+  },
+  {
+    title: "Address",
+    key: "address",
+  },
+]
+</script>

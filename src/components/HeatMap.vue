@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue"
 import h337 from "heatmap.js"
-import { getPointerData } from "./utils/heatmap"
+import { getPointerData } from "./utils/tracking"
 
 defineEmits<{
   (e: "close"): void
