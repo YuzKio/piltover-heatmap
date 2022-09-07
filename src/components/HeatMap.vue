@@ -18,6 +18,11 @@ defineEmits<{
 
 const heatmapInstance = ref()
 onMounted(async () => {
+  const heatmapContainerElement = document.getElementById("heatmap-container")
+  const documentElement = document.documentElement
+  heatmapContainerElement!.style.width = documentElement.scrollWidth + "px"
+  heatmapContainerElement!.style.height = documentElement.scrollHeight + "px"
+
   heatmapInstance.value = h337.create({
     container: document.getElementById("heatmap")!,
     radius: 20,
@@ -25,19 +30,19 @@ onMounted(async () => {
     minOpacity: 0,
     blur: 0.75,
   })
-
+  const start = Date.now()
   const pointerData = await getPointerData()
   heatmapInstance.value.addData(pointerData)
+  const end = Date.now()
+  console.log("heatmap data loaded in", end - start, "ms")
 })
 </script>
 
 <style lang="scss" scoped>
 #heatmap-container {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   z-index: 10;
   display: flex;
   #heatmap {
@@ -46,7 +51,7 @@ onMounted(async () => {
 }
 
 .close-button {
-  position: absolute;
+  position: fixed;
   top: 10px;
   right: 10px;
   z-index: 100;
