@@ -28,16 +28,33 @@ const getPointers = async () => {
 }
 
 // 数据处理
+// 取到的数据结构：
+/* 
+{
+  [domId]: {
+    [index]: {
+      clickx: number,
+      clicky: number
+      max: number
+    }
+  }
+} */
 export const getPointerData = async () => {
   const pointers = await getPointers()
-  return Object.keys(pointers).reduce((prev: Array<any>, cur) => {
-    const temp = pointers[cur].reduce((prevArr: Array<any>, curPoint: any) => {
-      const { clickx, clicky } = curPoint
-      const domRect = document.getElementById(cur)?.getBoundingClientRect()
-      const x = domRect?.left! + clickx
-      const y = domRect?.top! + clicky
-      return [...prevArr, { x, y }]
-    }, [])
-    return prev.concat(temp)
-  }, [])
+  const pointerData: Array<any> = []
+  Object.keys(pointers).forEach((cur) => {
+    // 按domId分组遍历，计算该dom结点的位置
+    const domRect = document.getElementById(cur)?.getBoundingClientRect()
+    const domLeft = domRect?.left!
+    const domTop = domRect?.top!
+    // 遍历该dom结点的点击数据
+    Object.values(pointers[cur]).forEach((curPoint: any) => {
+      // 计算该点击数据的位置
+      const x = domLeft + curPoint.clickx
+      const y = domTop + curPoint.clicky
+      // 将该点击数据的位置和次数存入数组
+      pointerData.push({ x, y, max: curPoint.max })
+    })
+  })
+  return pointerData
 }

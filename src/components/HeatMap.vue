@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue"
-import h337 from "heatmap.js"
+import h337 from "@mars3d/heatmap.js"
 import { getPointerData } from "./utils/tracking"
 
 defineEmits<{
@@ -22,19 +22,14 @@ onMounted(async () => {
   const documentElement = document.documentElement
   heatmapContainerElement!.style.width = documentElement.scrollWidth + "px"
   heatmapContainerElement!.style.height = documentElement.scrollHeight + "px"
+  const pointerData = await getPointerData()
 
   heatmapInstance.value = h337.create({
     container: document.getElementById("heatmap")!,
-    radius: 20,
-    maxOpacity: 0.5,
-    minOpacity: 0,
-    blur: 0.75,
+    radius: 25,
+    blur: 0.8,
   })
-  const start = Date.now()
-  const pointerData = await getPointerData()
-  heatmapInstance.value.addData(pointerData)
-  const end = Date.now()
-  console.log("heatmap data loaded in", end - start, "ms")
+  heatmapInstance.value.setData({ data: pointerData, max: 10, min: 0 })
 })
 </script>
 
