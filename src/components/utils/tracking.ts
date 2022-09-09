@@ -50,7 +50,9 @@ export const getPointerData = async (range: Array<number>) => {
   const pointerData: Array<any> = []
   Object.keys(pointers).forEach((cur) => {
     // 按domId分组遍历，计算该dom结点的位置
-    const domRect = document.getElementById(cur)?.getBoundingClientRect()
+    const curDom = document.getElementById(cur)
+    if (!curDom) return
+    const domRect = curDom.getBoundingClientRect()
     const domLeft = domRect?.left!
     const domTop = domRect?.top!
     // 遍历该dom结点的点击数据
@@ -62,5 +64,6 @@ export const getPointerData = async (range: Array<number>) => {
       pointerData.push({ x, y, max: curPoint.max })
     })
   })
+  console.log(pointerData.length)
   return pointerData
 }

@@ -6,58 +6,97 @@
     {{ msg }}
   </h1>
 
-  <div>
-    <n-data-table
-      :columns="columns"
-      :data="[]"
-      style="width: 1000px; height: 800px"
-      id="table"
-      @click="($event: any) => handleDataReport($event, 'table')"
-    />
-  </div>
+  <n-space vertical>
+    <n-card title="表格">
+      <n-data-table
+        :columns="columns"
+        :data="data"
+        id="table"
+        @click="($event: any) => handleDataReport($event, 'table')"
+      />
+    </n-card>
 
-  <div class="card">
-    <n-space>
-      <n-button
-        id="counter"
-        @click="($event: any) => {
+    <n-card title="按钮">
+      <n-space>
+        <n-button
+          id="counter"
+          @click="($event: any) => {
           count ++
           handleDataReport($event, 'counter')
         }"
-      >
-        count is {{ count }}
-      </n-button>
-      <n-tooltip placement="bottom" trigger="click">
-        <template #trigger>
-          <n-button
-            id="tooltip"
-            @click="($event: any) => handleDataReport($event, 'tooltip')"
-          >
-            点击
-          </n-button>
-        </template>
-        <span> I wish they all could be California girls </span>
-      </n-tooltip>
-      <n-popselect
-        v-model:value="value"
-        :options="options"
-        size="medium"
-        scrollable
-      >
-        <n-button
-          id="popselect"
-          @click="($event: any) => handleDataReport($event, 'popselect')"
         >
-          {{ value || "Popselect" }}
+          count is {{ count }}
         </n-button>
-      </n-popselect>
-    </n-space>
-  </div>
+        <n-tooltip placement="bottom" trigger="click">
+          <template #trigger>
+            <n-button
+              id="tooltip"
+              @click="($event: any) => handleDataReport($event, 'tooltip')"
+            >
+              点击
+            </n-button>
+          </template>
+          <span> I wish they all could be California girls </span>
+        </n-tooltip>
+        <n-popselect
+          v-model:value="value"
+          :options="options"
+          size="medium"
+          scrollable
+        >
+          <n-button
+            id="popselect"
+            @click="($event: any) => handleDataReport($event, 'popselect')"
+          >
+            {{ value || "Popselect" }}
+          </n-button>
+        </n-popselect>
+      </n-space>
+    </n-card>
+
+    <n-card title="折叠面板">
+      <n-collapse
+        id="collapse"
+        @click="($event: any) => {
+          handleDataReport($event, 'collapse')
+        }"
+      >
+        <n-collapse-item title="青铜" name="1">
+          <div
+            id="collapse-item-1"
+            @click.stop="($event: any) => {
+              handleDataReport($event, 'collapse-item-1')
+            }"
+          >
+            可以
+          </div>
+        </n-collapse-item>
+        <n-collapse-item title="白银" name="2">
+          <div
+            id="collapse-item-2"
+            @click.stop="($event: any) => handleDataReport($event, 'collapse-item-2')"
+          >
+            很好
+          </div>
+        </n-collapse-item>
+        <n-collapse-item title="黄金" name="3">
+          <div
+            id="collapse-item-3"
+            @click.stop="($event: any) => handleDataReport($event, 'collapse-item-3')"
+          >
+            真棒
+          </div>
+        </n-collapse-item>
+      </n-collapse>
+    </n-card>
+  </n-space>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref, h } from "vue"
 import { handleDataReport } from "./utils/tracking"
+import { NButton } from "naive-ui"
+import type { DataTableColumns } from "naive-ui"
 
 defineProps<{ msg: string }>()
 
@@ -116,18 +155,58 @@ const options = [
   },
 ]
 
-const columns = [
-  {
-    title: "Name",
-    key: "name",
+type Song = {
+  no: number
+  title: string
+  length: string
+}
+
+const createColumns = ({
+  play,
+}: {
+  play: (row: Song) => void
+}): DataTableColumns<Song> => {
+  return [
+    {
+      title: "No",
+      key: "no",
+    },
+    {
+      title: "Title",
+      key: "title",
+    },
+    {
+      title: "Length",
+      key: "length",
+    },
+    {
+      title: "Action",
+      key: "actions",
+      render(row) {
+        return h(
+          NButton,
+          {
+            strong: true,
+            tertiary: true,
+            size: "small",
+            onClick: () => play(row),
+          },
+          { default: () => "Play" }
+        )
+      },
+    },
+  ]
+}
+
+const columns = createColumns({
+  play(row: Song) {
+    console.log(row)
   },
-  {
-    title: "Age",
-    key: "age",
-  },
-  {
-    title: "Address",
-    key: "address",
-  },
+})
+
+const data: Song[] = [
+  { no: 3, title: "Wonderwall", length: "4:18" },
+  { no: 4, title: "Don't Look Back in Anger", length: "4:48" },
+  { no: 12, title: "Champagne Supernova", length: "7:27" },
 ]
 </script>
