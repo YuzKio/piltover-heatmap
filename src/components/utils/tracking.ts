@@ -23,8 +23,14 @@ const handleClickEventReport = (e: MouseEvent, domId: string) => {
 }
 
 // 请求数据
-const getPointers = async () => {
-  return (await requestHeatmapClickPoint({ pointId: pointerId.CLICK })).data
+const getPointers = async (range?: Array<number>) => {
+  return (
+    await requestHeatmapClickPoint({
+      pointId: pointerId.CLICK,
+      startTime: range?.[0],
+      endTime: range?.[1],
+    })
+  ).data
 }
 
 // 数据处理
@@ -39,8 +45,8 @@ const getPointers = async () => {
     }
   }
 } */
-export const getPointerData = async () => {
-  const pointers = await getPointers()
+export const getPointerData = async (range: Array<number>) => {
+  const pointers = await getPointers(range)
   const pointerData: Array<any> = []
   Object.keys(pointers).forEach((cur) => {
     // 按domId分组遍历，计算该dom结点的位置

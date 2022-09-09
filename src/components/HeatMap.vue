@@ -1,14 +1,23 @@
 <template>
   <div id="heatmap-container">
-    <n-button class="close-button" type="primary" @click="$emit('close')">
-      关闭
-    </n-button>
+    <section class="operation-panel">
+      <n-space>
+        <n-date-picker
+          v-model:value="range"
+          type="daterange"
+          :on-update:value="(rangeValue: Array<number>) => fetchHeatmapData(rangeValue)"
+          clearable
+        />
+        <n-button type="primary" @click="$emit('close')"> 关闭 </n-button>
+      </n-space>
+    </section>
+
     <div id="heatmap"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue"
+import { ref, onMounted, computed } from "vue"
 import h337 from "@mars3d/heatmap.js"
 import { getPointerData } from "./utils/tracking"
 
@@ -17,20 +26,27 @@ defineEmits<{
 }>()
 
 const heatmapInstance = ref()
+const range = ref()
+
 onMounted(async () => {
   const heatmapContainerElement = document.getElementById("heatmap-container")
   const documentElement = document.documentElement
   heatmapContainerElement!.style.width = documentElement.scrollWidth + "px"
   heatmapContainerElement!.style.height = documentElement.scrollHeight + "px"
-  const pointerData = await getPointerData()
 
   heatmapInstance.value = h337.create({
     container: document.getElementById("heatmap")!,
     radius: 25,
     blur: 0.8,
   })
-  heatmapInstance.value.setData({ data: pointerData, max: 10, min: 0 })
+
+  await fetchHeatmapData(range.value)
 })
+
+const fetchHeatmapData = async (rangeValue: Array<number>) => {
+  const pointerData = await getPointerData(rangeValue)
+  heatmapInstance.value.setData({ data: pointerData, max: 10, min: 0 })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -45,7 +61,7 @@ onMounted(async () => {
   }
 }
 
-.close-button {
+.operation-panel {
   position: fixed;
   top: 10px;
   right: 10px;
