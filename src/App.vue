@@ -1,13 +1,12 @@
 <template>
+  <HeatMap v-if="active" @close="active = false" />
   <n-switch
     v-model:value="active"
-    style="z-index: 100"
     id="switch"
     @click="($event: any) => handleDataReport($event, 'switch')"
   >
     <template #unchecked> 开启热力图 </template>
   </n-switch>
-  <HeatMap v-if="active" @close="active = false" />
   <section>
     <img
       src="./assets/vue.svg"
@@ -37,5 +36,10 @@ const active = ref(false)
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
+}
+#switch {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 </style>
