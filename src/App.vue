@@ -26,9 +26,9 @@
 
 <script setup lang="ts">
 import TestFunction from "./components/TestFunction.vue"
-import HeatMap from "./components/HeatMap.vue"
+import HeatMap from "./components/Heatmap/index.vue"
 import { ref } from "vue"
-import { handleDataReport } from "./components/utils/tracking"
+import { handleDataReport } from "./components/Heatmap/utils"
 
 const active = ref(false)
 </script>

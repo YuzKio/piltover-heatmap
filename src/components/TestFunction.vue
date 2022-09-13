@@ -94,7 +94,7 @@
 
 <script setup lang="ts">
 import { ref, h } from "vue"
-import { handleDataReport } from "./utils/tracking"
+import { handleDataReport } from "./Heatmap/utils"
 import { NButton } from "naive-ui"
 import type { DataTableColumns } from "naive-ui"
 

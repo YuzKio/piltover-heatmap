@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue"
 import h337 from "@mars3d/heatmap.js"
-import { getPointerData } from "./utils/tracking"
+import { getPointerData } from "./utils"
 
 defineEmits<{
   (e: "close"): void
