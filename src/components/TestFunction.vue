@@ -1,40 +1,21 @@
 <template>
-  <h1
-    id="message"
-    @click="($event: any) => handleDataReport($event, 'message')"
-  >
+  <h1 v-tracking="'message'">
     {{ msg }}
   </h1>
 
   <n-space vertical>
     <n-card title="表格">
-      <n-data-table
-        :columns="columns"
-        :data="data"
-        id="table"
-        @click="($event: any) => handleDataReport($event, 'table')"
-      />
+      <n-data-table :columns="columns" :data="data" v-tracking="'table'" />
     </n-card>
 
     <n-card title="按钮">
       <n-space>
-        <n-button
-          id="counter"
-          @click="($event: any) => {
-          count ++
-          handleDataReport($event, 'counter')
-        }"
-        >
+        <n-button v-tracking="'counter'" @click="count++">
           count is {{ count }}
         </n-button>
         <n-tooltip placement="bottom" trigger="click">
           <template #trigger>
-            <n-button
-              id="tooltip"
-              @click="($event: any) => handleDataReport($event, 'tooltip')"
-            >
-              点击
-            </n-button>
+            <n-button v-tracking="'tooltip'"> 点击 </n-button>
           </template>
           <span> I wish they all could be California girls </span>
         </n-tooltip>
@@ -44,10 +25,7 @@
           size="medium"
           scrollable
         >
-          <n-button
-            id="popselect"
-            @click="($event: any) => handleDataReport($event, 'popselect')"
-          >
+          <n-button v-tracking="'popselect'">
             {{ value || "Popselect" }}
           </n-button>
         </n-popselect>
@@ -55,37 +33,15 @@
     </n-card>
 
     <n-card title="折叠面板">
-      <n-collapse
-        id="collapse"
-        @click="($event: any) => {
-          handleDataReport($event, 'collapse')
-        }"
-      >
+      <n-collapse v-tracking="'collapse'">
         <n-collapse-item title="青铜" name="1">
-          <div
-            id="collapse-item-1"
-            @click.stop="($event: any) => {
-              handleDataReport($event, 'collapse-item-1')
-            }"
-          >
-            可以
-          </div>
+          <div v-tracking="'collapse-item-1'">可以</div>
         </n-collapse-item>
         <n-collapse-item title="白银" name="2">
-          <div
-            id="collapse-item-2"
-            @click.stop="($event: any) => handleDataReport($event, 'collapse-item-2')"
-          >
-            很好
-          </div>
+          <div v-tracking="'collapse-item-2'">很好</div>
         </n-collapse-item>
         <n-collapse-item title="黄金" name="3">
-          <div
-            id="collapse-item-3"
-            @click.stop="($event: any) => handleDataReport($event, 'collapse-item-3')"
-          >
-            真棒
-          </div>
+          <div v-tracking="'collapse-item-3'">真棒</div>
         </n-collapse-item>
       </n-collapse>
     </n-card>
@@ -94,7 +50,6 @@
 
 <script setup lang="ts">
 import { ref, h } from "vue"
-import { handleDataReport } from "./Heatmap/utils"
 import { NButton } from "naive-ui"
 import type { DataTableColumns } from "naive-ui"
 

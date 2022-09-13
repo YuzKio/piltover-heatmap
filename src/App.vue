@@ -1,10 +1,9 @@
 <template>
   <div class="demo-container">
     <n-switch
+      v-tracking="'switch'"
       class="heatmap-switch"
       v-model:value="active"
-      id="switch"
-      @click="($event: any) => handleDataReport($event, 'switch')"
     >
       <template #unchecked> 开启热力图 </template>
     </n-switch>
@@ -15,8 +14,7 @@
           src="./assets/piltover.svg"
           class="logo"
           alt="Vue logo"
-          id="logo"
-          @click="($event: any) => handleDataReport($event, 'logo')"
+          v-tracking="'logo'"
         />
       </div>
       <TestFunction msg="Test Function" />
@@ -28,7 +26,6 @@
 import TestFunction from "./components/TestFunction.vue"
 import HeatMap from "./components/Heatmap/index.vue"
 import { ref } from "vue"
-import { handleDataReport } from "./components/Heatmap/utils"
 
 const active = ref(false)
 </script>

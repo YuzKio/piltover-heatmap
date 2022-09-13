@@ -10,7 +10,7 @@ export const handleDataReport = (e: MouseEvent, domId: string) => {
 }
 
 const handleClickEventReport = (e: MouseEvent, domId: string) => {
-  const clickDom = document.getElementById(domId)
+  const clickDom = document.querySelector(`[data-tracking="${domId}"]`)
   const domX = clickDom?.getBoundingClientRect().left
   const domY = clickDom?.getBoundingClientRect().top
   const data = {
@@ -50,7 +50,7 @@ export const getPointerData = async (range: Array<number>) => {
   const pointerData: Array<any> = []
   Object.keys(pointers).forEach((cur) => {
     // 按domId分组遍历，计算该dom结点的位置
-    const curDom = document.getElementById(cur)
+    const curDom = document.querySelector(`[data-tracking="${cur}"]`)
     if (!curDom) return
     const domRect = curDom.getBoundingClientRect()
     const domLeft = domRect?.left!
