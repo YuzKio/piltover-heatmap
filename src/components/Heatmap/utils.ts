@@ -1,7 +1,7 @@
 import { requestHeatmapClickPoint } from "../../api/request"
 
 enum pointerId {
-  CLICK = 5,
+  CLICK = 6,
 }
 
 // 数据上报
@@ -17,6 +17,7 @@ const handleClickEventReport = (e: MouseEvent, domId: string) => {
     dom: domId,
     clickx: e.clientX - domX!,
     clicky: e.clientY - domY!,
+    route: window.location.pathname,
   }
   // 上报数据
   webfunnyEvent(pointerId.CLICK).trackEvent(data)
@@ -27,6 +28,7 @@ const getPointers = async (range?: Array<number>) => {
   return (
     await requestHeatmapClickPoint({
       pointId: pointerId.CLICK,
+      route: window.location.pathname,
       startTime: range?.[0],
       endTime: range?.[1],
     })
@@ -64,6 +66,5 @@ export const getPointerData = async (range: Array<number>) => {
       pointerData.push({ x, y, max: curPoint.max })
     })
   })
-  console.log(pointerData.length)
   return pointerData
 }

@@ -1,7 +1,7 @@
 <template>
-  <h1 v-tracking="'message'">
+  <n-h1 v-tracking="'message'">
     {{ msg }}
-  </h1>
+  </n-h1>
 
   <n-space vertical>
     <n-card title="表格">
@@ -44,6 +44,14 @@
           <div v-tracking="'collapse-item-3'">真棒</div>
         </n-collapse-item>
       </n-collapse>
+    </n-card>
+
+    <n-card title="v-for">
+      <n-space>
+        <n-tag v-for="item in data" v-tracking="`tag-${item.no}`">{{
+          item.title
+        }}</n-tag>
+      </n-space>
     </n-card>
   </n-space>
 </template>

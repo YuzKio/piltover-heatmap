@@ -1,6 +1,7 @@
 import { createApp } from "vue"
 import App from "./App.vue"
 import naive from "naive-ui"
+import router from "./router"
 import { handleDataReport } from "./components/Heatmap/utils"
 
 const app = createApp(App)
@@ -18,4 +19,4 @@ app.directive("tracking", {
   },
 })
 
-app.use(naive).mount("#app")
+app.use(naive).use(router).mount("#app")

@@ -6,6 +6,7 @@ const request = lyla.extend({
 
 export async function requestHeatmapClickPoint(params: {
   pointId: number
+  route: string
   startTime?: number
   endTime?: number
 }) {
