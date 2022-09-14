@@ -1,7 +1,7 @@
 <template>
   <div class="demo-container">
     <n-switch
-      v-tracking="'switch'"
+      v-tracking="{ id: 'switch' }"
       class="heatmap-switch"
       v-model:value="active"
     >
@@ -14,7 +14,7 @@
           src="../../assets/piltover.svg"
           class="logo"
           alt="Vue logo"
-          v-tracking="'logo'"
+          v-tracking="{ id: 'logo' }"
         />
       </div>
       <section>

@@ -8,13 +8,24 @@ const app = createApp(App)
 
 app.directive("tracking", {
   mounted(el, params) {
-    const id = params.value
+    const id = params.value.id
+    const self = params.value.self
     if (!el.getAttribute("data-tracking")) {
       el.setAttribute("data-tracking", id)
+      if (self) {
+        el.setAttribute("data-tracking-self", true)
+      }
     }
+
     el.addEventListener("click", (e: any) => {
-      handleDataReport(e, id)
-      e.stopPropagation()
+      const target = e.target
+      const targetId = target.getAttribute("data-tracking")
+      const targetSelf = target.getAttribute("data-tracking-self")
+      if (targetSelf && targetId !== params.value.id) {
+        return
+      } else {
+        handleDataReport(e, id)
+      }
     })
   },
 })

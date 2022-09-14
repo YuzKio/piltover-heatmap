@@ -1,21 +1,25 @@
 <template>
-  <n-h1 v-tracking="'message'">
+  <n-h1 v-tracking="{ id: 'message' }">
     {{ msg }}
   </n-h1>
 
   <n-space vertical>
     <n-card title="表格">
-      <n-data-table :columns="columns" :data="data" v-tracking="'table'" />
+      <n-data-table
+        :columns="columns"
+        :data="data"
+        v-tracking="{ id: 'table' }"
+      />
     </n-card>
 
     <n-card title="按钮">
       <n-space>
-        <n-button v-tracking="'counter'" @click="count++">
+        <n-button v-tracking="{ id: 'counter' }" @click="count++">
           count is {{ count }}
         </n-button>
         <n-tooltip placement="bottom" trigger="click">
           <template #trigger>
-            <n-button v-tracking="'tooltip'"> 点击 </n-button>
+            <n-button v-tracking="{ id: 'tooltip' }"> 点击 </n-button>
           </template>
           <span> I wish they all could be California girls </span>
         </n-tooltip>
@@ -25,7 +29,7 @@
           size="medium"
           scrollable
         >
-          <n-button v-tracking="'popselect'">
+          <n-button v-tracking="{ id: 'popselect' }">
             {{ value || "Popselect" }}
           </n-button>
         </n-popselect>
@@ -33,22 +37,22 @@
     </n-card>
 
     <n-card title="折叠面板">
-      <n-collapse v-tracking="'collapse'">
+      <n-collapse v-tracking="{ id: 'collapse-item' }">
         <n-collapse-item title="青铜" name="1">
-          <div v-tracking="'collapse-item-1'">可以</div>
+          <div v-tracking="{ id: 'collapse-item-1', self: true }">可以</div>
         </n-collapse-item>
         <n-collapse-item title="白银" name="2">
-          <div v-tracking="'collapse-item-2'">很好</div>
+          <div v-tracking="{ id: 'collapse-item-2', self: true }">很好</div>
         </n-collapse-item>
         <n-collapse-item title="黄金" name="3">
-          <div v-tracking="'collapse-item-3'">真棒</div>
+          <div v-tracking="{ id: 'collapse-item-3', self: true }">真棒</div>
         </n-collapse-item>
       </n-collapse>
     </n-card>
 
     <n-card title="v-for">
       <n-space>
-        <n-tag v-for="item in data" v-tracking="`tag-${item.no}`">{{
+        <n-tag v-for="item in data" v-tracking="{ id: `tag-${item.no}` }">{{
           item.title
         }}</n-tag>
       </n-space>

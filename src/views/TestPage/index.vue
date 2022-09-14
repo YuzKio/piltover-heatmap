@@ -2,7 +2,7 @@
   <div class="page-container">
     <HeatMap v-if="active" @close="active = false" />
     <n-switch
-      v-tracking="'switch'"
+      v-tracking="{ id: 'switch' }"
       class="heatmap-switch"
       v-model:value="active"
     >
@@ -14,19 +14,19 @@
           src="../../assets/piltover.svg"
           class="logo"
           alt="Vue logo"
-          v-tracking="'logo'"
+          v-tracking="{ id: 'logo' }"
         />
       </div>
 
       <section style="text-align: center">
         <n-space style="display: flex; justify-content: center; margin: 60px">
-          <n-button @click="count1++" v-tracking="'page-button-1'">
+          <n-button @click="count1++" v-tracking="{ id: 'page-button-1' }">
             count1 is {{ count1 }}
           </n-button>
-          <n-button @click="count2++" v-tracking="'page-button-2'">
+          <n-button @click="count2++" v-tracking="{ id: 'page-button-2' }">
             count2 is {{ count2 }}
           </n-button>
-          <n-button @click="count3++" v-tracking="'page-button-3'">
+          <n-button @click="count3++" v-tracking="{ id: 'page-button-3' }">
             count3 is {{ count3 }}
           </n-button>
         </n-space>

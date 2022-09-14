@@ -45,7 +45,7 @@ onMounted(async () => {
 
 const fetchHeatmapData = async (rangeValue: Array<number>) => {
   const pointerData = await getPointerData(rangeValue)
-  heatmapInstance.value.setData({ data: pointerData, max: 10, min: 0 })
+  heatmapInstance.value.setData({ data: pointerData, max: 10 })
 }
 </script>
 
